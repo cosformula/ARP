@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdn.bootcss.com/vis/4.20.1/vis-network.min.js"></script>
+  <link href="https://cdn.bootcss.com/vis/4.20.1/vis-network.min.css" rel="stylesheet">
+</head>
+
+<body>
+  <div id="net" style="height:500px;width:100%;">
+  </div>
+  <script type="text/javascript">
+    // create an array with nodes
+    function rnd(start, end) {
+      return Math.floor(Math.random() * (end - start) + start)
+    }
+    var nodes = new vis.DataSet([{
+        id: 1,
+        label: 'Router',
+        level: 0
+      },
+      {
+        id: 2,
+        label: 'Node 2',
+        level: 1
+      },
+      {
+        id: 3,
+        label: 'Node 3',
+        level: 1
+      },
+      {
+        id: 4,
+        label: 'Node 4',
+        level: 1
+      },
+      {
+        id: 5,
+        label: 'Node 5',
+        level: 1
+      }
+    ]);
+
+    // create an array with edges
+    var edges = new vis.DataSet([{
+        from: 1,
+        to: 2,
+        dash: true,
+        arrows: {
+          to: true
+        }
+      },
+      {
+        from: 1,
+        to: 3
+      },
+      {
+        from: 1,
+        to: 4
+      },
+      {
+        from: 1,
+        to: 5
+      }
+    ]);
+
+    // create a network
+    var container = document.getElementById('net');
+
+    // provide the data in the vis format
+    var data = {
+      nodes: nodes,
+      edges: edges
+    };
+    var options = {
+      nodes: {
+        shape: 'dot',
+        size: 30,
+        font: {
+          size: 32,
+          color: '#000'
+        },
+        borderWidth: 2
+      },
+      edges: {
+        smooth: {
+          // type: 'diagonalCross',
+          forceDirection: 'vertical',
+          roundness: 0.4,
+
+        }
+      },
+      // layout: {
+      //     hierarchical: {
+      //         direction: 'UD'
+      //     }
+      // },
+      // freezeForStabilization: true,
+      tooltip: {
+        delay: 300,
+        fontColor: "black",
+        fontSize: 14, // px
+        fontFace: "verdana",
+        color: {
+          border: "#666",
+          background: "#FFFFC6"
+        }
+      },
+      physics: false
+    };
+
+    // initialize your network!
+    var network = new vis.Network(container, data, options);
+
+  </script>
+  <button>action </button>
+  <script>
+    $(document).ready(function () {
+      $("button").click(function () {
+        edges.add({
+          from: rnd(1, 6),
+          to: rnd(1, 6)
+        })
+      });
+    });
+
+  </script>
+</body>
+
+</html>
